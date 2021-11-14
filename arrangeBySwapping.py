@@ -12,7 +12,7 @@ while i <= j:
         j-=1
     else:
         i+=1
-    """if Putinfront-1==i:
+    """if Putinfront-1==i: this is not needed
         i+=1"""
 for i in range(len(Array1)):
     print(Array1[i])
