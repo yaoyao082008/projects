@@ -1,6 +1,5 @@
 from random import randint
-C=4
-R=3
+
 def createminefield(C,R,M):
     minefield=[[0 for i in range(C)]for i in range(R)]
     while M>0:
@@ -11,5 +10,7 @@ def createminefield(C,R,M):
         minefield[x][y]=1
     return minefield
 
+R=4
+C=3
 matrix=createminefield(C,R,5)
 print(matrix)
