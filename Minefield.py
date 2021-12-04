@@ -1,4 +1,7 @@
 from random import randint
+import time
+from tkinter import Tk, Button, DISABLED
+buttons={}
 
 class neighbourhood:
     def __init__(self,deltaI,deltaJ):
@@ -46,3 +49,14 @@ for i in range(R):
     for j in range(C):
         print(matrix[i][j],end=" ")
     print()
+
+
+
+def show_symbol(x,y):
+    buttons[x,y]['text']=matrix[x][y]
+ 
+for x in range(R):
+    for y in range(C):
+        button=Button(command=lambda  x=x, y=y:show_symbol(x,y), width=4,height=4)
+        button.grid(column=x,row=y)
+        buttons[x,y]=button
