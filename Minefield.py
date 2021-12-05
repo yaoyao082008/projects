@@ -1,8 +1,8 @@
 from random import randint
-import time
 from tkinter import Tk, Button, DISABLED
 buttons={}
-
+root=Tk()
+minestoclear=10
 class neighbourhood:
     def __init__(self,deltaI,deltaJ):
         self.deltaI=deltaI
@@ -17,9 +17,8 @@ neighbours.append(neighbourhood(0,1))
 neighbours.append(neighbourhood(1,-1))
 neighbours.append(neighbourhood(1,0))
 neighbours.append(neighbourhood(1,1))
-
 def createminefield(C,R,M):
-    minefield=[[0 for i in range(C)]for i in range(R)]
+    minefield=[[-2 for i in range(C)]for i in range(R)]
     while M>0:
         x=randint(0,R-1)
         y=randint(0,C-1)
@@ -41,22 +40,42 @@ def get_neibourhood(matrix,R,C):
                         matrix[x][y]=minesnearby
 
 
-R=6
-C=6
-matrix=createminefield(C,R,13)
+R=9
+C=9
+matrix=createminefield(C,R,10 )
 newminefield=get_neibourhood(matrix,R,C)
-for i in range(R):
-    for j in range(C):
-        print(matrix[i][j],end=" ")
-    print()
 
 
 
 def show_symbol(x,y):
     buttons[x,y]['text']=matrix[x][y]
- 
+    show_neighbours(x,y)
+    gameover(x,y)
+    print("y: %s x: %d" %(y,x))
+def show_neighbours(x,y):
+    if matrix[x][y]==0:
+        return 
+    if matrix[x][y]==-2:
+        matrix[x][y]=0
+        for obj in neighbours:
+            posX= obj.deltaI
+            posY=obj.deltaJ
+            if x+posX>=0 and x+posX<R and y+posY>=0 and y+posY<C:
+                buttons[x+posX,y+posY]['text']=matrix[x+posX][y+posY]
+                if matrix[x+posX][y+posY]==-2:       
+                    show_neighbours(x+posX,y+posY)
+root.mainloop()
+
+    
+def gameover(x,y):
+    if matrix[x][y]==-1:
+        pass
+def Flag():
+    pass
+def win_game():
+    pass
 for x in range(R):
     for y in range(C):
-        button=Button(command=lambda  x=x, y=y:show_symbol(x,y), width=4,height=4)
+        button=Button(command=lambda  x=x, y=y:show_symbol(x,y), width=3,height=2,bg="light green")
         button.grid(column=x,row=y)
         buttons[x,y]=button
