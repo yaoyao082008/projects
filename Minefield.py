@@ -3,6 +3,7 @@ from tkinter import Tk, Button, DISABLED
 buttons={}
 root=Tk()
 minestoclear=10
+
 class neighbourhood:
     def __init__(self,deltaI,deltaJ):
         self.deltaI=deltaI
@@ -39,13 +40,10 @@ def get_neibourhood(matrix,R,C):
                         minesnearby+=1
                         matrix[x][y]=minesnearby
 
-
 R=9
 C=9
 matrix=createminefield(C,R,10 )
 newminefield=get_neibourhood(matrix,R,C)
-
-
 
 def show_symbol(x,y):
     buttons[x,y]['text']=matrix[x][y]
@@ -64,18 +62,20 @@ def show_neighbours(x,y):
                 buttons[x+posX,y+posY]['text']=matrix[x+posX][y+posY]
                 if matrix[x+posX][y+posY]==-2:       
                     show_neighbours(x+posX,y+posY)
-root.mainloop()
 
-    
 def gameover(x,y):
     if matrix[x][y]==-1:
         pass
-def Flag():
-    pass
+def Flag(event):
+    global minestoclear
+    minestoclear-=1
+    buttons[event.x_root,event.y_root]['text']=('M')
 def win_game():
     pass
 for x in range(R):
     for y in range(C):
-        button=Button(command=lambda  x=x, y=y:show_symbol(x,y), width=3,height=2,bg="light green")
+        button=Button(root,command=lambda  x=x, y=y:show_symbol(x,y), width=3,height=2,bg="light green")
         button.grid(column=x,row=y)
         buttons[x,y]=button
+        buttons[x,y].bind("<Button-3>",Flag)
+root.mainloop()
