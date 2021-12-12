@@ -5,8 +5,9 @@ from PIL import Image , ImageTk
 from tkinter import messagebox
 labels={}
 buttons={}
-winCon=0
+winCon=10
 minestoclear=10
+minesuncovered=0
 # from tkinter import *
 # from tkinter.ttk import *
 
@@ -47,16 +48,19 @@ def get_neibourhood(matrix,R,C):
                         minesnearby+=1
                         matrix[x][y]=minesnearby
 def show_neighbours(x,y):
-    if matrix[x][y]=="":
+    global minesuncovered
+    if matrix[x][y]==" ":
         return 
     if matrix[x][y]==-2:
-        matrix[x][y]=""
+        matrix[x][y]=" "
         labels[x,y].configure(text=matrix[x][y])
+        minesuncovered+=1
         for obj in neighbours:
             posX= obj.deltaI
             posY=obj.deltaJ
             if x+posX>=0 and x+posX<R and y+posY>=0 and y+posY<C:
                 labels[x+posX,y+posY].configure(text=matrix[x+posX][y+posY])
+                minesuncovered+=1
                 buttons[x+posX,y+posY].config(background='light green',relief=SUNKEN)
                 if matrix[x+posX][y+posY]==-2:       
                     show_neighbours(x+posX,y+posY)
@@ -72,7 +76,7 @@ newminefield=get_neibourhood(matrix,R,C)
 
 
 def left(event):
-    master.title('clicked left')
+    global minesuncovered
     x = event.x_root - master.winfo_rootx()
     y = event.y_root - master.winfo_rooty()
     z = master.grid_location(x,y)
@@ -85,11 +89,11 @@ def left(event):
         master.destroy()
     if matrix[buttonx][buttony]==-2:
         show_neighbours(buttonx,buttony)
-    #button.config(fg='blue')
+    minesuncovered+=1
     
+        
 def right(event):
-    global winCon,minestoclear
-    master.title('clicked right')
+    global winCon,minestoclear,minesuncovered
     x = event.x_root - master.winfo_rootx()
     y = event.y_root - master.winfo_rooty()
  
@@ -99,40 +103,36 @@ def right(event):
     z = master.grid_location(x,y)
     buttonx=z[0]
     buttony=z[1]
-    #if minestoclear>0:
     if labels[buttonx,buttony]['width']==0:
         labels[buttonx,buttony].config(width=4,height=2,image='')
-    else:
+        if matrix[buttonx][buttony]==-1:
+            winCon+=1
+        minestoclear+=1
+    elif labels[buttonx,buttony]['text']=='' and minestoclear>0 :
         labels[buttonx,buttony].config(width=0,height=0,image=flag)
-        #if matrix[buttonx][buttony]==-1:
-        #    winCon+=1
-        #if winCon==10:
-        #    messagebox.showinfo('game won','congrats you won minesweeper easy mode')
-        #    master.destroy()
-    #if labels[buttonx,buttony]['width']==0:
-    #    labels[buttonx,buttony].config(width=4,height=2,image='')
+        if matrix[buttonx][buttony]==-1:
+            winCon-=1
+        minestoclear-=1
+    if winCon==0:
+        messagebox.showinfo('game won','you won congrats')
+        master.destroy()
+        
 
 master = Tk()
-#flag= PhotoImage(file="C:\\Users\\Quanren.Xiong\\Downloads\\flag_icon.png")
+master.title('MineSweeper')
 image = Image.open("C:\\Users\\Quanren.Xiong\\Downloads\\flag_icon.png")
 flag1 = image.resize((30,30))
 flag= ImageTk.PhotoImage(flag1)
-#f = Frame(master, background="white")
-#f.pack()
+
 
 for x in range(R):
     for y in range(C):
-        #button=Button(root, command=lambda  x=x, y=y:show_symbol(x,y), width=4,height=4)
         button = Frame(master, width=20, height=20,bg='green',borderwidth=1)
         button.grid(column=x,row=y)
         buttons[x,y]=button
-        #label = Label(button, text=f"Row {x}\nColumn {y}")
         label = Label(button,width=4,height=2)
         label.bind('<Button-3>', right)
         label.bind('<Button-1>',left)
         label.pack()
-        #button.pack()
         labels[x,y]=label
-        # buttons[x,y].bind('<Button-1>', left)   # bind left mouse click
-        #buttons[x,y].bind('<Button-3>', right)  # bind right mouse click
 master.mainloop()
