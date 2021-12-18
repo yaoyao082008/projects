@@ -53,13 +53,13 @@ def show_neighbours(x,y):
         return 
     if matrix[x][y]==-2:
         matrix[x][y]=" "
-        labels[x,y].configure(text=matrix[x][y])
+        labels[x,y].configure(text=matrix[x][y],bg='light green')
         minesuncovered+=1
         for obj in neighbours:
             posX= obj.deltaI
             posY=obj.deltaJ
             if x+posX>=0 and x+posX<R and y+posY>=0 and y+posY<C:
-                labels[x+posX,y+posY].configure(text=matrix[x+posX][y+posY])
+                labels[x+posX,y+posY].configure(text=matrix[x+posX][y+posY],bg='light green')
                 minesuncovered+=1
                 buttons[x+posX,y+posY].config(background='light green',relief=SUNKEN)
                 if matrix[x+posX][y+posY]==-2:       
@@ -83,6 +83,7 @@ def left(event):
     buttonx=z[0]
     buttony=z[1]
     labels[buttonx,buttony]['text']=matrix[buttonx][buttony]
+    labels[buttonx,buttony].config(bg='light green')
     buttons[buttonx,buttony].config(relief=SUNKEN)
     if matrix[buttonx][buttony]==-1:
         messagebox.showinfo('GAMEOVER','Sadly you clicked on a mine and died')
@@ -120,17 +121,19 @@ def right(event):
 
 master = Tk()
 master.title('MineSweeper')
-image = Image.open("C:\\Users\\Quanren.Xiong\\Downloads\\flag_icon.png")
+#image = Image.open("C:\\Users\\Quanren.Xiong\\Downloads\\flag_icon.png")
+image = Image.open("flag_icon.png")
+
 flag1 = image.resize((30,30))
 flag= ImageTk.PhotoImage(flag1)
 
 
 for x in range(R):
     for y in range(C):
-        button = Frame(master, width=20, height=20,bg='green',borderwidth=1)
+        button = Frame(master, width=20, height=20,bg='black',borderwidth=1)
         button.grid(column=x,row=y)
         buttons[x,y]=button
-        label = Label(button,width=4,height=2)
+        label = Label(button,width=4,height=2,bg='green') 
         label.bind('<Button-3>', right)
         label.bind('<Button-1>',left)
         label.pack()
