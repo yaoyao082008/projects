@@ -138,4 +138,5 @@ for x in range(R):
         label.bind('<Button-1>',left)
         label.pack()
         labels[x,y]=label
+messagebox.showinfo("how to play"," You play minesweeper by uncovering 10 mines in a layout of 91 boxes on a grid. left click if you suspect no mine and right click if there is a mine. Once you uncover all 10 mines you win. If you left click on a mine you lose. Good Luck!")
 master.mainloop()
