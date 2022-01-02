@@ -1,4 +1,4 @@
-array1=[0,1,1,2,0,1,2,0,1]
+array1=[0,1,1,2,0,1,2,0,1,4,4,5,8,6,6,6,4,4,4,8,8]
 def sort(starting,ending,array1):
     if  ending-starting<=1:
         return
