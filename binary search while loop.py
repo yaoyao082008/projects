@@ -1,8 +1,8 @@
 Array=[1,6,9,11,15]
-target=80
+target=19
 starting=0
 ending=len(Array)-1
-while ending-starting>0:
+while ending-starting>=1:
     splittingPoint=(starting+ending)//2
     if Array[splittingPoint]<target:
         starting=splittingPoint+1

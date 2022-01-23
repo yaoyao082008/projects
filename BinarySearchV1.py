@@ -1,5 +1,6 @@
-Array=[]
-target=1
+Array=[0,3,4,5,9,10]
+kthMissingNumber=6
+target=7
 def search(starting,ending):
     middle=(starting+ending)//2
     if ending-starting<=0:
