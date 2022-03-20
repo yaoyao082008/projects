@@ -1,5 +1,5 @@
 Array=[1,6,9,11,15]
-target=19
+target=11
 starting=0
 ending=len(Array)-1
 while ending-starting>=1:
