@@ -1,4 +1,4 @@
-Array=[0,3,4,5,9,10]
+Array=[0,3,4]
 kthMissingNumber=6
 target=7
 def search(starting,ending):
