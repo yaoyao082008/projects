@@ -1,28 +1,22 @@
 
 def power(base,exponent):
     posExponent=abs(exponent)
-    mainVar=base
-    storedVar=1
+    res=1
 
     if(base==0):
-         return 0
+        return 0
 
-    while posExponent>1:
-        if posExponent%2==0:
-            mainVar=mainVar*mainVar
-            posExponent=posExponent/2
-        else:
-            storedVar=mainVar*storedVar
-            posExponent-=1
+    while posExponent>0:
+        if posExponent%2==1:
+            res=base*res
+        base=base*base
+        posExponent//=2
 
     if exponent<0:
-        return 1/(mainVar*storedVar)
-    elif exponent>0:
-        return mainVar*storedVar
-    else:
-        return 1
+        return 1/res
+    return res
 
-value=power(2,9)
+value=power(2,11)
 
 print(value)
 
