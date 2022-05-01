@@ -10,14 +10,14 @@ def power(base,exponent):
         if posExponent%2==1:
             res=base*res
         base=base*base
-        posExponent//=2
+        posExponent= posExponent>>1
 
     if exponent<0:
         return 1/res
     return res
 
-value=power(2,11)
+value=power(9,12)
 
-print(value)
+print()
 
 
