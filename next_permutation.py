@@ -1,4 +1,4 @@
-Array=[1,2,3,4]
+Array=[1,4,3,2]
 switch=False
 #smallest number greater than I
 #we know to change the thousands digit if there is no digit greater than the hundreds
@@ -20,7 +20,7 @@ def next_permutation():
             break
     rev=len(Array)-1
     end+=1
-    for i in range(end,len(Array)):
+    for i in range(end,len(Array)//2):
         Array[end],Array[rev]=Array[rev],Array[end]
         rev-=1
 
