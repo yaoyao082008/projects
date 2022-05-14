@@ -1,8 +1,15 @@
 from random import randint
-from tkinter import Tk, Button, DISABLED
+from tkinter import Tk, Frame, Label
+from tkinter import*
+from PIL import Image , ImageTk
+from tkinter import messagebox
+labels={}
 buttons={}
-root=Tk()
+winCon=10
 minestoclear=10
+minesuncovered=0
+# from tkinter import *
+# from tkinter.ttk import *
 
 class neighbourhood:
     def __init__(self,deltaI,deltaJ):
@@ -18,6 +25,7 @@ neighbours.append(neighbourhood(0,1))
 neighbours.append(neighbourhood(1,-1))
 neighbours.append(neighbourhood(1,0))
 neighbours.append(neighbourhood(1,1))
+
 def createminefield(C,R,M):
     minefield=[[-2 for i in range(C)]for i in range(R)]
     while M>0:
@@ -39,43 +47,92 @@ def get_neibourhood(matrix,R,C):
                     if matrix[x+posX][y+posY]==-1:
                         minesnearby+=1
                         matrix[x][y]=minesnearby
-
-R=9
-C=9
-matrix=createminefield(C,R,10 )
-newminefield=get_neibourhood(matrix,R,C)
-
-def show_symbol(x,y):
-    buttons[x,y]['text']=matrix[x][y]
-    show_neighbours(x,y)
-    gameover(x,y)
-    print("y: %s x: %d" %(y,x))
 def show_neighbours(x,y):
-    if matrix[x][y]==0:
+    global minesuncovered
+    if matrix[x][y]==" ":
         return 
     if matrix[x][y]==-2:
-        matrix[x][y]=0
+        matrix[x][y]=" "
+        labels[x,y].configure(text=matrix[x][y])
+        minesuncovered+=1
         for obj in neighbours:
             posX= obj.deltaI
             posY=obj.deltaJ
             if x+posX>=0 and x+posX<R and y+posY>=0 and y+posY<C:
-                buttons[x+posX,y+posY]['text']=matrix[x+posX][y+posY]
+                labels[x+posX,y+posY].configure(text=matrix[x+posX][y+posY])
+                minesuncovered+=1
+                buttons[x+posX,y+posY].config(background='light green',relief=SUNKEN)
                 if matrix[x+posX][y+posY]==-2:       
                     show_neighbours(x+posX,y+posY)
+    
 
-def gameover(x,y):
-    if matrix[x][y]==-1:
-        pass
-def Flag(event):
-    global minestoclear
-    minestoclear-=1
-    buttons[event.x_root,event.y_root]['text']=('M')
-def win_game():
-    pass
+
+R=9
+C=9
+matrix=createminefield(C,R,10)
+newminefield=get_neibourhood(matrix,R,C)
+
+
+
+
+def left(event):
+    global minesuncovered
+    x = event.x_root - master.winfo_rootx()
+    y = event.y_root - master.winfo_rooty()
+    z = master.grid_location(x,y)
+    buttonx=z[0]
+    buttony=z[1]
+    labels[buttonx,buttony]['text']=matrix[buttonx][buttony]
+    buttons[buttonx,buttony].config(relief=SUNKEN)
+    if matrix[buttonx][buttony]==-1:
+        messagebox.showinfo('GAMEOVER','Sadly you clicked on a mine and died')
+        master.destroy()
+    if matrix[buttonx][buttony]==-2:
+        show_neighbours(buttonx,buttony)
+    minesuncovered+=1
+    
+        
+def right(event):
+    global winCon,minestoclear,minesuncovered
+    x = event.x_root - master.winfo_rootx()
+    y = event.y_root - master.winfo_rooty()
+ 
+    # Here grid_location() method is used to
+    # retrieve the relative position on the
+    # parent widget
+    z = master.grid_location(x,y)
+    buttonx=z[0]
+    buttony=z[1]
+    if labels[buttonx,buttony]['width']==0:
+        labels[buttonx,buttony].config(width=4,height=2,image='')
+        if matrix[buttonx][buttony]==-1:
+            winCon+=1
+        minestoclear+=1
+    elif labels[buttonx,buttony]['text']=='' and minestoclear>0 :
+        labels[buttonx,buttony].config(width=0,height=0,image=flag)
+        if matrix[buttonx][buttony]==-1:
+            winCon-=1
+        minestoclear-=1
+    if winCon==0:
+        messagebox.showinfo('game won','you won congrats')
+        master.destroy()
+        
+
+master = Tk()
+master.title('MineSweeper')
+image = Image.open("C:\\Users\\Quanren.Xiong\\Downloads\\flag_icon.png")
+flag1 = image.resize((30,30))
+flag= ImageTk.PhotoImage(flag1)
+
+
 for x in range(R):
     for y in range(C):
-        button=Button(root,command=lambda  x=x, y=y:show_symbol(x,y), width=3,height=2,bg="light green")
+        button = Frame(master, width=20, height=20,bg='green',borderwidth=1)
         button.grid(column=x,row=y)
         buttons[x,y]=button
-        buttons[x,y].bind("<Button-3>",Flag)
-root.mainloop()
+        label = Label(button,width=4,height=2)
+        label.bind('<Button-3>', right)
+        label.bind('<Button-1>',left)
+        label.pack()
+        labels[x,y]=label
+master.mainloop()
