@@ -1,12 +1,16 @@
-def permutation(start,Array,k):
+def permutation(start,Array):
     if start==len(Array)-1:
+        print(Array)
         return Array
     for i in range(start,len(Array)):
-        pass
+        b=Array.copy()
+        b[i],b[start]=b[start],b[i]
+        permutation(start+1,b)
+
         
-#[4,3,2,1]
-num=4
-A=[i for i in range(num,0,-1)]
-permutation(0,A,len(A)-1)
+#[1,2,3]
+num=5
+A=[i for i in range(1,num+1)]
+permutation(0,A)
 
 
