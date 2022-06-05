@@ -3,11 +3,9 @@ def permutation(start,Array):
         print(Array)
         return Array
     for i in range(start,len(Array)):
-        b=Array.copy()
-        b[i],b[start]=b[start],b[i]
-        permutation(start+1,b)
+        Array[i],Array[start]=Array[start],Array[i]
+        permutation(start+1,Array)
+        Array[i],Array[start]=Array[start],Array[i]
 num=4
 A=[i for i in range(1,num+1)]
 permutation(0,A)
-
-
