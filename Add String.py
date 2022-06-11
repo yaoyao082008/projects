@@ -26,5 +26,6 @@ for i in range(len(longer)):
     else: 
         Sum=Sum+str(sum)
 Sum=Sum[::-1]
+print("")
 print(Sum)
     
