@@ -100,7 +100,15 @@ class LinkedList:
             itr=temp
         self.root=prev
     def reverse_ez(self):
-        pass
+        itr=self.root
+        newroot=None
+        while itr:
+            temp=newroot
+            newroot=itr
+            itr=itr.next
+            newroot.next=temp
+        
+        self.root=newroot
 
 ll=LinkedList()
 for i in range(10):
