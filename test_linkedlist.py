@@ -16,7 +16,7 @@ class LinkedList:
         itr=self.root
         linkListstr=''
         while itr:
-            linkListstr+= " --> "+str(itr.data)
+            linkListstr+= str(itr.data)+" --> "
             itr= itr.next
         print(linkListstr)
 
@@ -91,21 +91,23 @@ class LinkedList:
 
     def reverse(self):
         itr=self.root
-        while itr.next:
-            itr=itr.next
-
-
-
-
+        prev=None
+        temp=self.root
+        while itr:
+            temp=itr.next
+            itr.next=prev
+            prev=itr
+            itr=temp
+        self.root=prev
+    def reverse_ez(self):
+        pass
 
 ll=LinkedList()
-ll.insert_beggining(5)
-ll.insert_beggining(89)
-ll.insert_beggining(90)
-ll.insert_at(ll.length()-1,6)
-ll.insert_at(ll.length()-1,'i love pandas')
-ll.insert_by_value('i love pandas','i hate pandas')
-ll.reverse()
+for i in range(10):
+    ll.insert_end(i)
+#ll.reverse()
+ll.print()
+ll.reverse_ez()
 ll.print()
     
 
