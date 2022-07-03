@@ -1,47 +1,38 @@
+from collections import deque
 
-Expression='69+42*8/4+3'
+expression='(1+3/3-2)'
+def solve_expression(expression):
+    i=0
+    term=0
+    factor=1
+    temp=0
+    new=deque()
+    while i < len(expression):
+        if expression[i]==')':
+            temp=new.pop()
+            symbol=new.pop() 
+            if symbol=='(':
+                term=term+temp*factor
+                i+=1
+                new.append(term)
+                factor=1
+                term=0
+            elif symbol=='*':
+                factor=factor*temp
+            elif symbol=='/':
+                factor=factor*(1/temp)
+            elif symbol=='+':
+                term=term+temp*factor
+                factor=1
+            elif symbol=='-':
+                term=term-temp*factor
+                factor=1
+        elif expression[i].isdigit():
+            new.append(float(expression[i]))
+            i+=1
+        else:
+            new.append(expression[i])
+            i+=1
+    return new
 
-num=[]
-symbol=''
-k=0
-prev_k=0
-
-for i in range(len(Expression)):
-    if Expression[i].isdigit():
-        num.append(Expression[i])
-        k+=1
-    if not Expression[i].isdigit():
-        num[prev_k:k]=[''.join(num[prev_k:k])]
-        num.append(Expression[i])
-        prev_k=len(num)
-        k=prev_k
-
-num[prev_k:k]=[''.join(num[prev_k:k])]
-k=0
-i=1
-while len(num)>1:
-    if (num[i]=='-' and i+2>=len(num)
-     or num[i]=='-' and num[i+2]!='*' 
-     and num[i+2]!='/'):
-        num[i]= float(num[i-1])-float(num[i+1])
-        del num[i-1],num[i]
-        i=-1
-
-    elif (num[i]=='+' and i+2>=len(num) 
-    or num[i]=='+' and num[i+2]!='*' 
-    and num[i+2]!='/'):
-        num[i]=float(num[i-1])+float(num[i+1])
-        del num[i-1],num[i]
-        i=-1
-
-    elif num[i]=='*':
-        num[i]=float(num[i-1])*float(num[i+1])
-        del num[i-1],num[i]
-        i=-1
-
-    elif num[i]=='/':
-        num[i]=float(num[i-1])/float(num[i+1])
-        del num[i-1],num[i]
-        i=-1
-    i+=2
-print(num)
+print(solve_expression(expression))
