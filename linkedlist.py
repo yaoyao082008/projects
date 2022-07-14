@@ -14,11 +14,11 @@ class LinkedList:
             print('list empty')
             return
         itr=self.root
-        linkListstr=''
         while itr:
-            linkListstr+= str(itr.data)+" --> "
+            print(str(itr.data)+" --> ",end='')
             itr= itr.next
-        print(linkListstr)
+        print()
+
 
     def insert_end(self,data):
         node=Node(data,None)
@@ -88,35 +88,6 @@ class LinkedList:
             itr=itr.next
         print('no value found')
         return
-
-    def reverse(self):
-        itr=self.root
-        prev=None
-        temp=self.root
-        while itr:
-            temp=itr.next
-            itr.next=prev
-            prev=itr
-            itr=temp
-        self.root=prev
-    def reverse_ez(self):
-        itr=self.root
-        newroot=None
-        while itr:
-            temp=newroot
-            newroot=itr
-            itr=itr.next
-            newroot.next=temp
-        
-        self.root=newroot
-
-ll=LinkedList()
-for i in range(10):
-    ll.insert_end(i)
-#ll.reverse()
-ll.print()
-ll.reverse_ez()
-ll.print()
     
 
 

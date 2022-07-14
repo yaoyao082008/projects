@@ -1,12 +1,11 @@
 from linkedlist import *
 ll=LinkedList()
-for i in range(10):
+for i in range(4):
     ll.insert_end(i+1)
 
 def reverse(ll):
     itr=ll.root
     prev=None
-    temp=ll.root
     while itr:
         temp=itr.next
         itr.next=prev
@@ -35,10 +34,15 @@ def cycle(ll):
     itr.next=ll.root
     return ll
 
+#[1-->2-->3-->4-->5-->6-->7-->8-->9-->10-->None]
+#[None<--1<--2<--3<--4<--5<--6<--7<--8<--9<--10]
 
-def reverse_recursion(ll):
-    
-    reverse_recursion(ll)
-ll.print()
-reverse_recursion(ll)
+
+def reverse_recursion(itr):
+    if itr==None or itr.next==None: 
+        return (itr, itr)
+    (newroot, tail)=reverse_recursion(itr.next)
+    tail.next = itr
+    return (newroot, itr)
+ll.insert_at(0,5)
 ll.print()
