@@ -85,26 +85,23 @@ class BinarySearchTree:
         print()
 
     def post_order_w(self):
-        count=0
         itr=self.root
-        prev=self.root        
+        prev=self.root
         temp=deque()
         temp.append(self.root)
-        while count<self.length:   
+        while len(temp)>0:   
             if not itr or not itr.left or itr.right and itr.right.data==prev:
                 itr=temp[-1]
                 if not itr.right:
                     prev=itr.data
                     print(prev,end='')
-                    count+=1
                     itr=None
                     temp.pop()
                 elif itr.right.data==prev:
                     prev=itr.data
                     print(prev,end='')
-                    count+=1
                     temp.pop()
-                    if count==self.length:break
+                    if len(temp)==0:break
                     itr=temp[-1]
                 elif not itr.left:
                     itr=itr.right
