@@ -10,7 +10,7 @@ class Node:
 
 
 
-class BinaryTree:
+class BinarySearchTree:
     def __init__(self,data):
         self.root=Node(data)
         self.length=1
@@ -87,20 +87,31 @@ class BinaryTree:
     def post_order_w(self):
         count=0
         itr=self.root
+        prev=self.root        
         temp=deque()
         temp.append(self.root)
-        while count<self.length:
-            if not itr:
-                itr=temp.pop()
-                if not itr.right:        
-                    print(itr.data,end='')
+        while count<self.length:   
+            if not itr or not itr.left or itr.right and itr.right.data==prev:
+                itr=temp[-1]
+                if not itr.right:
+                    prev=itr.data
+                    print(prev,end='')
                     count+=1
-                itr=itr.right
+                    itr=None
+                    temp.pop()
+                elif itr.right.data==prev:
+                    prev=itr.data
+                    print(prev,end='')
+                    count+=1
+                    temp.pop()
+                    if count==self.length:break
+                    itr=temp[-1]
+                elif not itr.left:
+                    itr=itr.right
+                    temp.append(itr)
             else:
-                if itr.right:
-                    temp.append(itr.right)
-                if itr.left:
-                    temp.append(itr.left)
+                if itr.right:temp.append(itr.right)
+                if itr.left:temp.append(itr.left)
                 itr=itr.left
         print()
 
@@ -110,15 +121,18 @@ class BinaryTree:
 
 
 
-test=BinaryTree(5)
+test=BinarySearchTree(5)
 test.insert(3)
 test.insert(7)
 test.insert(4)
 test.insert(2)
 test.insert(1)
 test.insert(6)
-test.insert(9)
+test.insert(12)
 test.insert(8)
 test.insert(10)
+test.insert(11)
+test.insert(13)
+test.insert(0)
 test.post_order_w()
 test.post_order(test.root)
