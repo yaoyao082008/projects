@@ -92,15 +92,11 @@ class BinarySearchTree:
         while len(temp)>0:
             if not itr or temp[-1].right==prev:
                 itr=temp[-1]
-                if itr.right==prev:
+                if itr.right==prev or not itr.right:
                     prev=temp[-1]
                     print(temp.pop().data,end='')
-                    if len(temp)==0:
+                    if not temp:
                         break
-                    itr=temp[-1]
-                elif not itr.right:
-                    prev=temp[-1]
-                    print(temp.pop().data,end='')
                     itr=None
             else:
                 if itr.right:
