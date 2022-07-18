@@ -89,26 +89,24 @@ class BinarySearchTree:
         prev=self.root
         temp=deque()
         temp.append(self.root)
-        while len(temp)>0:   
-            if not itr or not itr.left or itr.right and itr.right.data==prev:
+        while len(temp)>0:
+            if not itr or temp[-1].right==prev:
                 itr=temp[-1]
-                if not itr.right:
-                    prev=itr.data
-                    print(prev,end='')
-                    itr=None
-                    temp.pop()
-                elif itr.right.data==prev:
-                    prev=itr.data
-                    print(prev,end='')
-                    temp.pop()
-                    if len(temp)==0:break
+                if itr.right==prev:
+                    prev=temp[-1]
+                    print(temp.pop().data,end='')
+                    if len(temp)==0:
+                        break
                     itr=temp[-1]
-                elif not itr.left:
-                    itr=itr.right
-                    temp.append(itr)
+                elif not itr.right:
+                    prev=temp[-1]
+                    print(temp.pop().data,end='')
+                    itr=None
             else:
-                if itr.right:temp.append(itr.right)
-                if itr.left:temp.append(itr.left)
+                if itr.right:
+                    temp.append(itr.right)
+                if itr.left:
+                    temp.append(itr.left)
                 itr=itr.left
         print()
 
