@@ -90,7 +90,7 @@ class BinarySearchTree:
         temp=deque()
         temp.append(self.root)
         while temp:
-            if not itr or temp[-1].right==prev:
+            if not itr:
                 itr=temp[-1]
                 if itr.right==prev or not itr.right:
                     prev=temp[-1]
