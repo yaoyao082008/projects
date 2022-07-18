@@ -95,8 +95,6 @@ class BinarySearchTree:
                 if itr.right==prev or not itr.right:
                     prev=temp[-1]
                     print(temp.pop().data,end='')
-                    if not temp:
-                        break
                     itr=None
             else:
                 if itr.right:
