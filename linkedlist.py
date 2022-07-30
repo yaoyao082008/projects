@@ -6,9 +6,12 @@ class Node:
 class LinkedList:
     def __init__(self):
         self.root=None
+        self.length=0
+
     def insert_beggining(self,data):
         node=Node(data,self.root)
         self.root=node
+        self.length+=1
     def print(self):
         if self.root is None:
             print('list empty')
@@ -22,6 +25,7 @@ class LinkedList:
 
     def insert_end(self,data):
         node=Node(data,None)
+        self.length+=1
         if self.root is None:
             self.root=node
             return
@@ -30,18 +34,15 @@ class LinkedList:
             itr=itr.next
         itr.next=node
 
-    def length(self):
-        itr=self.root
-        count=0
-        while itr:
-            count+=1
-            itr=itr.next
-        return count
+
+    def len(self):
+        return self.length
 
     def delete(self,index):
         if index<0 or index>= self.length():
             print('not valid')
             return
+        self.length-=1
         if index==0:
             self.root=self.root.next
             return
@@ -55,9 +56,10 @@ class LinkedList:
             count+=1
     
     def insert_at(self,index,data):
-        if index<0 or index>= self.length():
+        if index<0 or index>= self.length:
             print('not valid')
             return
+        self.length+=1
         itr=self.root
         count=0
         while itr:
@@ -73,6 +75,7 @@ class LinkedList:
         while itr.next:
             if itr.next.data==data:
                 itr.next=itr.next.next
+                self.length-=1
                 return
             itr=itr.next
         print('no such value')
@@ -84,6 +87,7 @@ class LinkedList:
             if itr.data==value:
                 node=Node(data,itr.next)
                 itr.next=node
+                self.length+=1
                 return
             itr=itr.next
         print('no value found')

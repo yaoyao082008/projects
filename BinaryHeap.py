@@ -1,3 +1,5 @@
+
+
 class BinaryMinHeap:
     def __init__(self):
         self.storage=[]
@@ -7,32 +9,42 @@ class BinaryMinHeap:
     def delete(self):
         self.storage[0]=self.storage[-1]
         self.storage.pop()
-        self.size-=1
-        track=0
-        while (self.storage[track]>self.get_left_data(track) or 
-        self.storage[track]>self.get_right_data(0)):
-            if self.storage[track]>self.get_left_data(track):
-                k=self.get_left(track)
-                self.storage[track],self.storage[k]=self.storage[k],self.storage[track]
-                track=k
+        self.heapify_down()
 
-            elif self.storage[track]>self.get_right_data(0):
-                k=self.get_right(track)
-                self.storage[track],self.storage[k]=self.storage[track],self.storage[k]
-                track=k
 
-        
+    def heapify_down(self):
+        index=0
+        while (self.has_left(index) ):
+            child=self.get_left(index)
+            if (self.has_right(index) and 
+            self.get_right_data(index)<self.get_left_data(index)):
+                child=self.get_right(index)
+            if self.storage[index]<self.storage[child]:
+                break
+            self.swap(index,child)
+            index=child
+
+
+    def peek(self):
+        return self.storage[0]
 
 
     def insert(self,data):
         self.storage.append(data)
-        track=len(self.storage)-1
         self.size+=1
+        self.heapify_up()
+        
+
+    def heapify_up(self):
+        track=len(self.storage)-1
         while track > 0 and self.storage[track]<self.storage[self.get_parent(track)] :
             k=self.get_parent(track)
             self.storage[track],self.storage[k]=self.storage[k],self.storage[track]
             track=k
 
+
+    def swap(self,index1,index2):
+        self.storage[index1],self.storage[index2]=self.storage[index2],self.storage[index1]
 
     def get_parent_data(self,index):
         return self.storage[self.get_parent(index)]
@@ -53,11 +65,28 @@ class BinaryMinHeap:
     def get_right(self,index):
         return 2*index+2
 
+    def has_parent(self,index):
+        if (index-1)//2>=0 or (index-1)//2<self.size:
+            return True
+        return False
+
+    def has_left(self,index):
+        if index*2+1<self.size:
+            return True
+        return False
+    def has_right(self,index):
+        if index*2+2<self.size:
+            return True
+        return False
 
 
-test=BinaryMinHeap()
-for i in range(4):
-    test.insert(i+1)
+test = BinaryMinHeap()
 test.insert(0)
-test.delete()
+test.insert(1)
+test.insert(2)
+test.storage[0]=3
+test.heapify_down()
 print(test.storage)
+
+
+

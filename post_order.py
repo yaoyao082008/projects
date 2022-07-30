@@ -95,17 +95,14 @@ class BinarySearchTree:
                 if itr.right==prev or not itr.right:
                     prev=temp[-1]
                     print(temp.pop().data,end='')
-                    itr=None #forms a loop to check if to print
+                    itr=None
             else:
                 if itr.right:
                     temp.append(itr.right)
                 if itr.left:
                     temp.append(itr.left)
-                itr=itr.left        
+                itr=itr.left
         print()
-
-
-    
             
 
 
