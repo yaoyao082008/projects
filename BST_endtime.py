@@ -3,35 +3,50 @@ from collections import deque
 
 
 class Node:
-    def __init__(self,data,left=None,right=None):
+    def __init__(self,data,users,left=None,right=None):
         self.data=data
         self.left=left
         self.right=right
-        self.rank=0
-
+        self.users=users
 
 
 class BinarySearchTree:
-    def __init__(self,data):
-        self.root=Node(data)
-        self.length=1
+    def __init__(self):
+        self.root=None
+        self.length=0
 
-    def insert(self,data):
-        itr=self.root
+    def insert(self,data,users):
         self.length+=1
+        if self.length==1:
+            node=Node(data,users)
+            self.root=node
+            return
+        itr=self.root
         while True:
             if data>itr.data:
                 if not itr.right:
-                    node=Node(data,None,itr.right)
+                    node=Node(data,users,None,itr.right)
                     itr.right=node
                     break
                 itr=itr.right
             else:
                 if not itr.left:
-                    node=Node(data,itr.left,None)
+                    node=Node(data,users,itr.left,None)
                     itr.left=node
                     break
                 itr=itr.left
+
+    def search(self,data,users):
+        itr=self.root
+        while itr:
+            if data>itr.data:
+                itr=itr.right
+            elif data<itr.data:
+                itr=itr.left
+            else:
+                itr.users+=users
+                return True
+        return False
 
 
     def pre_order(self,root):

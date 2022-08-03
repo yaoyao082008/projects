@@ -3,6 +3,8 @@ class Node:
     def __init__(self, data , next=None):
         self.data=data
         self.next=next
+
+
 class LinkedList:
     def __init__(self):
         self.root=None
@@ -12,16 +14,6 @@ class LinkedList:
         node=Node(data,self.root)
         self.root=node
         self.length+=1
-    def print(self):
-        if self.root is None:
-            print('list empty')
-            return
-        itr=self.root
-        while itr:
-            print(str(itr.data)+" --> ",end='')
-            itr= itr.next
-        print()
-
 
     def insert_end(self,data):
         node=Node(data,None)
@@ -33,6 +25,16 @@ class LinkedList:
         while itr.next:
             itr=itr.next
         itr.next=node
+
+    def print(self):
+        if self.root is None:
+            print('list empty')
+            return
+        itr=self.root
+        while itr:
+            print(str(itr.data)+" --> ",end='')
+            itr= itr.next
+        print()
 
 
     def len(self):
@@ -92,6 +94,23 @@ class LinkedList:
             itr=itr.next
         print('no value found')
         return
+
+    def find_midpoint(self):
+        itr=self.root
+        count=0
+        mid=itr
+        i=1
+        while itr:
+            if i*2<=count:
+                mid=mid.next
+                i+=1
+            itr=itr.next
+            count+=1
+        print(mid.data)
+
     
 
-
+test=LinkedList()
+for i in range(11):
+    test.insert_end(i)
+test.find_midpoint()
