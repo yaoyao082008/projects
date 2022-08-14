@@ -14,12 +14,14 @@ class BinarySearchTree:
     def __init__(self):
         self.root=None
         self.length=0
+        self.pos=self.root
 
     def insert(self,data,users):
         self.length+=1
         if self.length==1:
             node=Node(data,users)
             self.root=node
+            self.pos=self.root
             return
         itr=self.root
         while True:
@@ -56,12 +58,11 @@ class BinarySearchTree:
         self.pre_order(root.left)
         self.pre_order(root.right)
 
-    def in_order(self,root):
-        if not root:
-            return
-        self.in_order(root.left)
-        print(root.data)
-        self.in_order(root.right)
+    def in_order(self,state):
+        if state:
+            self.in_order(state.left)
+            print(state.data)
+            self.in_order(state.right)
 
     def post_order(self,root):
         if not root:
@@ -87,19 +88,19 @@ class BinarySearchTree:
         print()
 
     def in_order_w(self):
-        count=0
-        itr=self.root
-        temp=deque()
-        while count<self.length:
-            if not itr:
-                itr=temp.pop()
-                print(itr.data,end='')
-                count+=1
-                itr=itr.right
+        stack = []
+        while True:
+            if self.pos is not None:
+                stack.append(self.pos)
+                self.pos=self.pos.left
+            elif stack:
+                self.pos = stack.pop()
+                print(self.pos.data,self.pos.users)
+                self.pos=self.pos.right
             else:
-                temp.append(itr)
-                itr=itr.left
-        print()
+                self.pos=self.root
+                break
+        
 
     def post_order_w(self):
         itr=self.root

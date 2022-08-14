@@ -19,25 +19,36 @@ class BinarySearchTree:
     def insert(self,data):
         itr=self.root
         self.length+=1
-        while True:
+        while data!=itr.data:
             if data>itr.data:
                 if not itr.right:
                     node=Node(data,None,itr.right)
                     itr.right=node
                     break
                 itr=itr.right
-            else:
+            elif data<itr.data:
                 if not itr.left:
                     node=Node(data,itr.left,None)
                     itr.left=node
                     break
                 itr=itr.left
 
+    def search(self,data):
+        itr=self.root
+        while itr:
+            if data>itr.data:
+                itr=itr.right
+            elif data<itr.data:
+                itr=itr.right
+            else:
+                return True
+        return False
+
 
     def pre_order(self,root):
         if not root:
             return
-        print(root.data,end='')
+        print(root.data,', ',end='')
         self.pre_order(root.left)
         self.pre_order(root.right)
 
@@ -45,7 +56,7 @@ class BinarySearchTree:
         if not root:
             return
         self.in_order(root.left)
-        print(root.data)
+        print(root.data,', ',end='')
         self.in_order(root.right)
 
     def post_order(self,root):
@@ -53,7 +64,7 @@ class BinarySearchTree:
             return
         self.post_order(root.left)
         self.post_order(root.right)
-        print(root.data,end='')
+        print(root.data,', ',end='')
 
     def pre_order_w(self):
         count=0
@@ -106,5 +117,20 @@ class BinarySearchTree:
                 itr=itr.left
         print()
     
-
+test=BinarySearchTree(33)
+test.insert(16)
+test.insert(50)
+test.insert(51)
+test.insert(66)
+test.insert(19)
+test.insert(27)
+test.insert(55)
+test.insert(13)
+test.insert(18)
+test.insert(34)
+test.insert(58)
+test.insert(15)
+test.insert(17)
+test.insert(25)
+test.post_order(test.root)
 
