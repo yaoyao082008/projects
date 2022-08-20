@@ -1,13 +1,26 @@
 from BST_endtime import * 
 
 def find_intervals(logs):
-    logs.in_order_w()
+    total_users=0
+    prev=logs.root
+    
+    while logs.has_next():
+        current=logs.next()
+        if prev!=current and current.users!=0:
+            print(prev.data,'-',current.data,'=',total_users)
+            prev=current
+        total_users+=current.users
+
+    print(prev.data,'- inf = 0')
+
+        
 
 
 
 
 
-logs=[[1,5],[1,6],[3,6],[7,9]]
+
+logs=[[1,5],[1,6],[3,6],[7,9],[9,12]]
 
 start=BinarySearchTree()
 

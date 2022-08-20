@@ -15,6 +15,7 @@ class BinarySearchTree:
         self.root=None
         self.length=0
         self.pos=self.root
+        self.temp=[]
 
     def insert(self,data,users):
         self.length+=1
@@ -51,6 +52,52 @@ class BinarySearchTree:
         return False
 
 
+
+    def next(self):
+        while True:
+            if self.pos is not None:
+                self.temp.append(self.pos)
+                self.pos=self.pos.left
+            elif self.temp:
+                self.pos=self.temp.pop()
+                val=self.pos
+                self.pos=self.pos.right
+                return val
+            else:
+                self.pos=self.root
+                return
+
+    def has_next(self):
+        if self.pos is None and not self.temp:
+            self.pos=self.root
+            return False
+        return True
+
+
+
+
+
+
+    def in_order_w(self):
+        stack = []
+        while True:
+            if self.pos is not None:
+                stack.append(self.pos)
+                self.pos=self.pos.left
+            elif stack:
+                self.pos = stack.pop()
+                print(self.pos.data,self.pos.users)
+                self.pos=self.pos.right
+            else:
+                self.pos=self.root
+                break
+
+
+
+
+
+
+
     def pre_order(self,root):
         if not root:
             return
@@ -63,6 +110,7 @@ class BinarySearchTree:
             self.in_order(state.left)
             print(state.data)
             self.in_order(state.right)
+
 
     def post_order(self,root):
         if not root:
@@ -87,19 +135,7 @@ class BinarySearchTree:
                 itr=itr.left
         print()
 
-    def in_order_w(self):
-        stack = []
-        while True:
-            if self.pos is not None:
-                stack.append(self.pos)
-                self.pos=self.pos.left
-            elif stack:
-                self.pos = stack.pop()
-                print(self.pos.data,self.pos.users)
-                self.pos=self.pos.right
-            else:
-                self.pos=self.root
-                break
+    
         
 
     def post_order_w(self):
