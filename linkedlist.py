@@ -3,6 +3,12 @@ class Node:
     def __init__(self, data , next=None):
         self.data=data
         self.next=next
+    
+    def next(self):
+        self=self.next()
+
+    def has_next(self):
+        return self.next
 
 
 class LinkedList:
@@ -109,25 +115,21 @@ class LinkedList:
         print(mid.data)
 
     def slice_mid_left(self):
-        left_arr=LinkedList()
         itr=self.root
         itr2=self.root
-        while itr2:
-            left_arr.insert_end(itr.data)
+        while itr2.next:
             itr=itr.next
             itr2=itr2.next
             if itr2:
                 itr2=itr2.next
-        return left_arr,itr
-
+        temp=itr.next
+        itr.next=None
+        return temp
     def slice_mid_right(self,mid):
-        right_arr=LinkedList()
         itr=mid
-        mid=itr
-        while itr:
-            right_arr.insert_end(itr.data)
+        while itr.next:
             itr=itr.next
-        return right_arr
+        itr.next=None
 
     
 
