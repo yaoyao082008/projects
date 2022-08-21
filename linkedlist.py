@@ -108,9 +108,26 @@ class LinkedList:
             count+=1
         print(mid.data)
 
+    def slice_mid_left(self):
+        left_arr=LinkedList()
+        itr=self.root
+        itr2=self.root
+        while itr2:
+            left_arr.insert_end(itr.data)
+            itr=itr.next
+            itr2=itr2.next
+            if itr2:
+                itr2=itr2.next
+        return left_arr,itr
+
+    def slice_mid_right(self,mid):
+        right_arr=LinkedList()
+        itr=mid
+        mid=itr
+        while itr:
+            right_arr.insert_end(itr.data)
+            itr=itr.next
+        return right_arr
+
     
 
-test=LinkedList()
-for i in range(11):
-    test.insert_end(i)
-test.find_midpoint()
