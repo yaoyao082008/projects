@@ -178,6 +178,6 @@ def update():
         
 
 
-#music.play("vanishing-horizon")
+music.play("vanishing-horizon")
 generate_moves()
 pgzrun.go()

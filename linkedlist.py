@@ -32,6 +32,15 @@ class LinkedList:
             itr=itr.next
         itr.next=node
 
+    def insert_node(self,node):
+        if self.root is None:
+            self.root=node
+            return
+        itr=self.root
+        while itr.next:
+            itr=itr.next
+        itr.next=node
+
     def print(self):
         if self.root is None:
             print('list empty')
