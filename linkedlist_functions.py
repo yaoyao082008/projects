@@ -1,6 +1,6 @@
 from linkedlist import *
 ll=LinkedList()
-for i in range(2):
+for i in range(10):
     ll.insert_end(i+1)
 
 def reverse(ll):
@@ -46,5 +46,48 @@ def reverse_recursion(itr):
     itr.next=None
     return (newroot, itr)
 
-reverse(ll)
+root,itr=reverse_recursion(ll.root)
+ll.root=root
 ll.print()
+
+
+
+
+
+
+
+"""if left.data<right.data:
+        left=left.next
+    else:
+        t=right.next
+        result=right
+        right.next=None
+        right=t
+    itr=result
+
+    while left or right:
+        if not left:
+            tempr=right.next
+            itr.next=right
+            right.next=None
+            right=tempr
+        elif not right:
+            templ=left.next
+            itr.next=left
+            left.next=None
+            left=templ
+        elif left.data<right.data:
+            templ=left.next
+            itr.next=left
+            left.next=None
+            left=templ
+        else:
+            tempr=right.next
+            itr.next=right
+            right.next=None
+            right=tempr
+        itr=itr.next
+
+    arr.root=result
+
+    return result"""

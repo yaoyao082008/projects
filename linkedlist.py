@@ -4,11 +4,8 @@ class Node:
         self.data=data
         self.next=next
     
-    def next(self):
-        self=self.next()
-
-    def has_next(self):
-        return self.next
+    def replace(self,node):
+        self=node
 
 
 class LinkedList:
