@@ -117,20 +117,5 @@ class BinarySearchTree:
                 itr=itr.left
         print()
     
-test=BinarySearchTree(33)
-test.insert(16)
-test.insert(50)
-test.insert(51)
-test.insert(66)
-test.insert(19)
-test.insert(27)
-test.insert(55)
-test.insert(13)
-test.insert(18)
-test.insert(34)
-test.insert(58)
-test.insert(15)
-test.insert(17)
-test.insert(25)
-test.post_order(test.root)
+
 

@@ -14,7 +14,7 @@ class BinaryMinHeap:
 
     def heapify_down(self):
         index=0
-        while (self.has_left(index) ):
+        while self.has_left(index):
             child=self.get_left(index)
             if (self.has_right(index) and 
             self.get_right_data(index)<self.get_left_data(index)):

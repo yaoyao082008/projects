@@ -7,19 +7,17 @@ from queue import Queue
 
 def levelOrder(root):
     nodes=Queue(maxsize=test.length)
-    print(root.data,end='')
+    print(root.data,' ',end='')
     itr=root
     nodes.put(root)
-    count=0
-    while count<test.length:
+    while not nodes.empty():
         itr=nodes.get()
         if itr.left:
-            print(itr.left.data,end='')
+            print(itr.left.data,' ',end='')
             nodes.put(itr.left)
         if itr.right:
-            print(itr.right.data,end='')
+            print(itr.right.data,' ',end='')
             nodes.put(itr.right)
-        count+=1
 
 
 

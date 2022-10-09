@@ -19,6 +19,7 @@ class BinaryMinHeapN:
             if (self.has_right(index) and 
             self.get_right_data(index)<self.get_left_data(index)):
                 child=self.get_right(index)
+                
             if self.storage[index].data<self.storage[child].data:
                 break
             self.swap(index,child)

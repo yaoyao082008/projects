@@ -7,7 +7,7 @@ class Node:
         self.left=left
         self.right=right
 
-class kdTree:
+class KDTree:
     
     def __init__(self):
         self.root=None
@@ -96,18 +96,3 @@ class kdTree:
         return sqrt((x2-x1)**2 + (y2-y1)**2)
 
 
-
-
-"""test=kdTree()
-test.insert([5,4])
-test.insert([2,6])
-test.insert([13,3])
-test.insert([3,1])
-test.insert([10,2])
-test.insert([8,7])
-test.insert([9,3])
-
-print()
-query_point=[9,4]
-nearest=test.nearest_neighbour(test.root,query_point,(test.calc_dis(query_point,test.root.coor),0))
-print(nearest)"""
