@@ -5,32 +5,31 @@ from math import sqrt
 
 class kdTree:
 
-    def __init__(self,npts):
-        m=1
-        i=npts
-        
-        while i>=1:
-            m=m<<1
-            i=i>>1
-
-        nboxes=2*npts - (m>>1)
-        if m<nboxes:
-            nboxes=m
-        nboxes-=1
-        self.tree=[]
-
-        for i in range(nboxes):
-            self.tree.append(None)
+    def __init__(self):
+        self.tree=[None for i in range(2240)]
 
 
 
     def insert(self,coor):
-        if not self.tree:
-            self.tree.append(coor) 
-            return
-
         index=0
+        if self.tree[index] is None:
+            self.tree[0]=coor
+            return
         layer=0
+
+        while coor!=self.tree[index]:
+            if coor[layer]>self.tree[index][layer]:
+                if self.tree[self.right(index)] is None:
+                    self.tree[self.right(index)]=coor
+                    break
+                index=self.right(index)
+            else:
+                if self.tree[self.left(index)] is None:
+                    self.tree[self.left(index)]=coor
+                    break
+                index=self.left(index)
+            layer=1-layer
+
         
 
 
@@ -78,7 +77,3 @@ class kdTree:
         if i>=len(self.tree):
             return 
         return i
-
-
-test=kdTree(1000)
-print()

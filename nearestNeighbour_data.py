@@ -1,9 +1,9 @@
 from KD_TREE import KDTree
+from arr_kdTree import kdTree
 from medianOf2DArr import median
 import csv
 import time
 
-start=time.time()
 
 
 def construct(arr,start,end,layer):
@@ -14,12 +14,14 @@ def construct(arr,start,end,layer):
 
     median(arr,start,end,mid,layer)
     cars.insert(arr[mid])
+    cars_arr.insert(arr[mid])
 
     construct(arr,start+1,mid,layer^1)
     construct(arr,mid,end-1,layer^1)
 
 
 cars=KDTree()
+cars_arr=kdTree()
 temp=[]
 
 with open('sample_data.csv','r') as data:
@@ -31,14 +33,21 @@ with open('sample_data.csv','r') as data:
 
 construct(temp,0,len(temp)-1,0)
 
+del temp
+
 
 with open('query_data.csv','r') as data:
     users=csv.reader(data)
-    start=time.time()
+    start_time=time.time()
     for user in users:
         x,y=float(user[0]),float(user[1])
         dis=cars.calc_dis((x,y),cars.root.coor)
         closet=cars.nearest_neighbour(cars.root,(x,y),(dis,0))
-end=time.time()
+        #acloset=cars_arr.nearest_neighbour(0,(x,y),(dis,0),0)
 
-print(end-start)
+        """if closet==acloset:
+            print('passed ')"""
+
+end_time=time.time()
+
+print(end_time-start_time)
