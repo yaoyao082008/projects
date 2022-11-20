@@ -3,9 +3,6 @@ class Node:
     def __init__(self, data , next=None):
         self.data=data
         self.next=next
-    
-    def replace(self,node):
-        self=node
 
 
 class LinkedList:
@@ -23,20 +20,16 @@ class LinkedList:
         self.length+=1
         if self.root is None:
             self.root=node
-            return
+            return node
+
         itr=self.root
         while itr.next:
             itr=itr.next
         itr.next=node
 
-    def insert_node(self,node):
-        if self.root is None:
-            self.root=node
-            return
-        itr=self.root
-        while itr.next:
-            itr=itr.next
-        itr.next=node
+        return itr
+
+
 
     def print(self):
         if self.root is None:
@@ -52,22 +45,24 @@ class LinkedList:
     def len(self):
         return self.length
 
-    def delete(self,index):
-        if index<0 or index>= self.length():
-            print('not valid')
-            return
+    def delete(self,org=None,node=None):
         self.length-=1
-        if index==0:
+
+        if node is None and org is None    or org==node.data[0]:
             self.root=self.root.next
-            return
-        count=0
-        itr=self.root
-        while itr:
-            if count==index-1:
-                itr.next=itr.next.next
-                return
-            itr=itr.next
-            count+=1
+            return self.root
+
+        
+        temp=node.next.next
+        trash=node.next
+        node.next.next=None
+        node.next=temp
+        del trash
+
+        return node
+
+
+        
     
     def insert_at(self,index,data):
         if index<0 or index>= self.length:
@@ -84,58 +79,6 @@ class LinkedList:
             itr=itr.next
             count+=1
 
-    def remove_value(self,data):
-        itr=self.root
-        while itr.next:
-            if itr.next.data==data:
-                itr.next=itr.next.next
-                self.length-=1
-                return
-            itr=itr.next
-        print('no such value')
-        return 
-
-    def insert_by_value(self,value,data):
-        itr=self.root
-        while itr:
-            if itr.data==value:
-                node=Node(data,itr.next)
-                itr.next=node
-                self.length+=1
-                return
-            itr=itr.next
-        print('no value found')
-        return
-
-    def find_midpoint(self):
-        itr=self.root
-        count=0
-        mid=itr
-        i=1
-        while itr:
-            if i*2<=count:
-                mid=mid.next
-                i+=1
-            itr=itr.next
-            count+=1
-        print(mid.data)
-
-    def slice_mid_left(self):
-        itr=self.root
-        itr2=self.root
-        while itr2.next:
-            itr=itr.next
-            itr2=itr2.next
-            if itr2:
-                itr2=itr2.next
-        temp=itr.next
-        itr.next=None
-        return temp
-    def slice_mid_right(self,mid):
-        itr=mid
-        while itr.next:
-            itr=itr.next
-        itr.next=None
 
     
 
