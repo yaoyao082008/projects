@@ -1,16 +1,18 @@
-from linkedlist_cacheProblem import LinkedList
+from Double_LinkedList_cacheProblem import DoubleLinkedListCycle
 
 class cache:
     def __init__(self,length):
         self.length=length
-        self.storage=LinkedList()
+        self.storage=DoubleLinkedListCycle()
         self.location={}
     
     def get(self,key=None):
         
         #get last value
         if key is None:
-            return self.location.get('latest')
+            if self.storage.is_empty():
+                return
+            return self.storage.root.prev.data
 
         if key not in self.location.keys():
             print(f'key {key} does not exist')
@@ -18,19 +20,15 @@ class cache:
 
         #update a key to latest
         orginal_node=self.location[key]
+        value=self.location[key].data[1]
 
-        #key value
-        if orginal_node.next.next is None:
-            return orginal_node.next.data[1]
+        # #key value
+        # if orginal_node.next.next ==self.storage.root:
+        #     return orginal_node.next.data[1]
 
-        key=self.location[key].next.data[0]
-        value=self.location[key].next.data[1]
-        next=self.location[key].next.next
-        
-        self.location[key]=self.storage.insert_end([key,value])
-        self.location[next.data[0]]=self.storage.delete(orginal_node)
+        self.storage.insert_end([key,value])
+        self.storage.delete(orginal_node)
 
-        self.location['latest']=[key,value]
 
         return value
         
@@ -44,14 +42,12 @@ class cache:
         elif self.length==0:
             return
         
-        self.location['latest']=[key,value]
         self.location[key]=self.storage.insert_end([key,value])
 
         # delete first value and update
         if self.storage.length >self.length:
-            del self.location[self.storage.root.next.data[0]]
-            new_root=self.storage.delete()
-            self.location[new_root.data[0]]=self.storage.root
+            del self.location[self.storage.root.data[0]]
+            self.storage.delete()
         
 
     def print(self):
@@ -60,7 +56,7 @@ class cache:
 
 
 test=cache(4)
-test.get()
+#test.get()
 for i in range(4):
      test.insert(i+1,2*(i+1))
 
@@ -70,5 +66,7 @@ test.insert(13, 17)
 print(test.get(13))
 print(test.get(3))
 print(test.get(3))
+test.insert(10,12)
+print(test.get())
 test.print()
 print()

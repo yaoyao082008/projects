@@ -5,6 +5,8 @@ class BinaryMinHeap:
         self.storage=[]
         self.size=0
 
+    def is_empty(self):
+        return len(self.storage)==0
 
     def delete(self):
         self.storage[0]=self.storage[-1]
@@ -86,7 +88,7 @@ test.insert(1)
 test.insert(2)
 test.storage[0]=3
 test.heapify_down()
-print(test.storage)
+print(test.peek())
 
 
 
