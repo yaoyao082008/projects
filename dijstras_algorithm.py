@@ -11,8 +11,6 @@ def shortestPath(source,graph,target,stops):
     stops+=1
     shortest_dis=BinaryMinHeap()
     previous={}
-    shortest={}
-
 
 
     for node in graph:
@@ -24,7 +22,6 @@ def shortestPath(source,graph,target,stops):
 
     while len(shortest_dis.storage)>1 and shortest_dis.peek()[0]!=target:
         parent,shortest_parent=shortest_dis.poll()
-        shortest[parent]=shortest_parent
 
         for node in graph[parent]:
             child,dis=node
@@ -33,6 +30,8 @@ def shortestPath(source,graph,target,stops):
                 if shortest_child>shortest_parent+dis:
                     shortest_dis.update(child,dis+shortest_parent)
                     previous[child]=[parent,previous[parent][1]+1]
+
+                
 
 
     distance=shortest_dis.peek()[1]

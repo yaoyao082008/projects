@@ -9,9 +9,12 @@ class BinaryMinHeap:
         return len(self.storage)==0
 
     def delete(self):
+        self.size-=1
+        ans=self.storage[0]
         self.storage[0]=self.storage[-1]
         self.storage.pop()
         self.heapify_down()
+        return ans
 
 
     def heapify_down(self):
@@ -68,7 +71,7 @@ class BinaryMinHeap:
         return 2*index+2
 
     def has_parent(self,index):
-        if (index-1)//2>=0 or (index-1)//2<self.size:
+        if (index-1)//2>=0:
             return True
         return False
 
@@ -82,13 +85,6 @@ class BinaryMinHeap:
         return False
 
 
-test = BinaryMinHeap()
-test.insert(0)
-test.insert(1)
-test.insert(2)
-test.storage[0]=3
-test.heapify_down()
-print(test.peek())
 
 
 
