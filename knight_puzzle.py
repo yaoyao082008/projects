@@ -77,7 +77,7 @@ class knight_puzzle:
         while x==x1 and y==y1:
             x,y=[randint(0,7),randint(0,7)]
             x1,y1=[randint(0,7),randint(0,7)]
-            
+
         self.start_coor=[x,y]
         self.cur_coor=[x,y]
         self.target_coor=[x1,y1]
@@ -106,6 +106,7 @@ class knight_puzzle:
 
         
     #     return min(self.min_moves)
+    #and some other
 
         
           
